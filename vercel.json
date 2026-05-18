@@ -1,9 +1,7 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/api/pexels", "dest": "/api/pexels.js" },
-    { "src": "/api/pixabay", "dest": "/api/pixabay.js" },
-    { "src": "/api/unsplash", "dest": "/api/unsplash.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/(.*)", "dest": "/public/index.html" }
   ]
 }
