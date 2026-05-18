@@ -98,6 +98,15 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 .btn-p{background:var(--fd);color:white;box-shadow:0 4px 14px rgba(26,115,232,.35)}
 .btn-p:hover{background:var(--fd2)}
 .mla{margin-left:auto}
+
+/* ── EXPORT BAR ── */
+#exportBar{display:none;background:white;border:1.5px solid var(--border);border-radius:var(--r12);padding:14px 20px;margin-bottom:22px;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 2px 12px rgba(26,115,232,.06)}
+#exportBar.show{display:flex}
+.exp-info{display:flex;flex-direction:column;gap:2px}
+.exp-title{font-size:13px;font-weight:700;color:var(--text)}
+.exp-sub{font-size:11px;color:var(--text3)}
+.btn-g{background:var(--g);color:white;box-shadow:0 4px 14px rgba(0,200,150,.3)}
+.btn-g:hover{background:#00b386}
 .pgw{height:4px;background:var(--border);border-radius:4px;margin-bottom:18px;overflow:hidden;display:none}
 .pgw.on{display:block}
 .pgb{height:100%;background:linear-gradient(90deg,var(--fd),var(--or),var(--fd));background-size:200%;animation:flow 1.5s linear infinite;transition:width .5s ease}
@@ -252,8 +261,7 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
       <div class="preview-title" id="previewTitle">Sheet preview</div>
       <div class="preview-actions">
         <span class="col-label">Item column:</span>
-        <select class="col-sel" id="colSelect" onchange="renderPreview()"></select>
-        <button class="use-btn" onclick="loadItemsFromSheet()">✓ Load &amp; Search all items →</button>
+        <select class="col-sel" id="colSelect" onchange="renderPreview();items=[];loadItemsFromSheet()"></select>
       </div>
     </div>
     <div class="tbl-scroll">
@@ -287,6 +295,16 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 
   <div class="pgw" id="pg"><div class="pgb" id="pgb"></div></div>
   <div class="strow"><div class="spin" id="spin"></div><span id="stat"></span></div>
+
+  <!-- EXPORT BAR -->
+  <div id="exportBar">
+    <div class="exp-info">
+      <div class="exp-title">📥 Export results to Excel</div>
+      <div class="exp-sub" id="expSub">Ready to export</div>
+    </div>
+    <button class="btn btn-g mla" onclick="exportExcel()">⬇ Download Excel</button>
+  </div>
+
   <div id="results"></div>
   <div class="empty" id="empty">
     <span class="ei">🍽</span>
@@ -361,7 +379,8 @@ function processFile(file){
       document.getElementById('previewTitle').textContent=`"${wb.SheetNames[0]}" — ${sheetRows.length} rows found`;
       document.getElementById('previewWrap').classList.add('show');
       renderPreview();
-      toast(`✓ Loaded ${sheetRows.length} rows — pick the item column and click Load`,'ok');
+      toast(`✓ Found ${sheetRows.length} items — searching now…`,'ok');
+      setTimeout(()=>loadItemsFromSheet(),300);
     }catch(err){toast('Could not read file: '+err.message,'err');}
   };
   if(ext==='csv')reader.readAsText(file);
@@ -380,8 +399,7 @@ function loadItemsFromSheet(){
   const unique=[...new Set(newItems)];
   unique.forEach(x=>{if(!items.includes(x))items.push(x);});
   rt();
-  toast(`✓ ${unique.length} items loaded — searching now…`,'ok');
-  setTimeout(()=>doSearch(),400);
+  setTimeout(()=>doSearch(),200);
 }
 
 /* ── SEARCH ── */
