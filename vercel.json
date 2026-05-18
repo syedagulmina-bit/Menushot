@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/pexels(.*)", "dest": "/api/pexels.js" },
+    { "src": "/api/pixabay(.*)", "dest": "/api/pixabay.js" },
+    { "src": "/api/image(.*)", "dest": "/api/image.js" },
+    { "src": "/(.*)", "dest": "/public/index.html" }
+  ]
+}
