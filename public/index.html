@@ -327,7 +327,7 @@ function card(img, srcKey){
   }));
   return `<div class="ic" onclick="openLb('${enc}')">
     <div class="ciw sk">
-      <img src="${img.thumb}" alt="${img.title}" loading="lazy"
+      <img src="/api/image?url=${encodeURIComponent(img.thumb)}" alt="${img.title}" loading="lazy"
         onload="this.parentElement.classList.remove('sk')"
         onerror="this.parentElement.classList.remove('sk');this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-size:12px>No preview</div>'"/>
       <span class="sbadge ${badge}">${img.source}</span>
@@ -429,7 +429,7 @@ function openLb(enc){
   document.getElementById('lbspin').classList.add('on');
   const src=img.full||img.thumb;
   if(!src){window.open(img.page,'_blank');return;}
-  lbImg.src=src;
+  lbImg.src='/api/image?url='+encodeURIComponent(src);
   document.getElementById('lb').classList.add('on');
   document.body.style.overflow='hidden';
 }
