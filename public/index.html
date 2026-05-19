@@ -20,6 +20,7 @@
   --g:#00c896;--r:#ff4040;
   --px:#00a878;--px-bg:rgba(0,168,120,.1);--px-bd:rgba(0,168,120,.3);
   --pb:#1a73e8;--pb-bg:rgba(26,115,232,.1);--pb-bd:rgba(26,115,232,.3);
+  --mi:#9b59b6;--mi-bg:rgba(155,89,182,.1);--mi-bd:rgba(155,89,182,.3);
   --r12:12px;--r8:8px;--rp:999px
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6;overflow-x:hidden}
@@ -89,6 +90,7 @@ main{max-width:1100px;margin:0 auto;padding:44px 28px 100px}
 .pip{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
 .pill.on-pexels{background:var(--px-bg);color:var(--px);border-color:var(--px-bd)}
 .pill.on-pixabay{background:var(--pb-bg);color:var(--pb);border-color:var(--pb-bd)}
+.pill.on-drive{background:var(--mi-bg);color:var(--mi);border-color:var(--mi-bd)}
 .opt{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text3);font-weight:500}
 select{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r8);color:var(--text);font-size:12px;font-family:'Inter',sans-serif;padding:0 8px;height:30px;cursor:pointer;outline:none}
 .chk{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);cursor:pointer;font-weight:500}
@@ -124,7 +126,8 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 .sl{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .sn{font-size:15px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text2);display:flex;align-items:center;gap:8px}
 .sdot{width:10px;height:10px;border-radius:50%}
-.dp{background:var(--px)}.dx{background:var(--pb)}
+.dp{background:var(--px)}.dx{background:var(--pb)}.dm{background:var(--mi)}
+.sn-pexels{color:var(--px)}.sn-pixabay{color:var(--pb)}.sn-drive{color:var(--mi)}
 .sn-pexels{color:var(--px)}
 .sn-pixabay{color:var(--pb)}
 .ball{margin-left:auto;font-size:11px;color:var(--fd);text-decoration:none;font-weight:700;opacity:.8;transition:opacity .15s}
@@ -142,6 +145,7 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 .covbtn{font-size:11px;font-weight:700;color:white;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);border-radius:var(--rp);padding:5px 13px}
 .sbadge{position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--rp)}
 .bp{background:rgba(0,168,120,.15);color:var(--px);border:1px solid rgba(0,168,120,.3)}
+.bd{background:rgba(155,89,182,.15);color:var(--mi);border:1px solid rgba(155,89,182,.3)}
 .bx{background:rgba(26,115,232,.15);color:var(--fb);border:1px solid rgba(26,115,232,.3)}
 .cb{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px}
 .ct{font-size:12px;font-weight:600;color:var(--text);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -285,6 +289,7 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
       <div class="srcs">
         <button class="pill on-pexels"  id="p-pexels"  onclick="tog('pexels')"><span class="pip"></span>Pexels</button>
         <button class="pill on-pixabay" id="p-pixabay" onclick="tog('pixabay')"><span class="pip"></span>Pixabay</button>
+        <button class="pill on-drive"   id="p-drive"   onclick="tog('drive')"><span class="pip"></span>⭐ My Images</button>
       </div>
       <div class="sep"></div>
       <div class="opt"><span>Per source:</span>
@@ -333,10 +338,14 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 <div id="toast"></div>
 
 <script>
-let items=[],srcOn={pexels:true,pixabay:true},total=0;
+let items=[],srcOn={pexels:true,pixabay:true,drive:true},total=0;
 let sheetRows=[],sheetHeaders=[];
 
-function tog(s){srcOn[s]=!srcOn[s];document.getElementById('p-'+s).className='pill'+(srcOn[s]?` on-${s}`:'');}
+function tog(s){
+  srcOn[s]=!srcOn[s];
+  const cls = s==='drive'?'on-drive':s==='pexels'?'on-pexels':'on-pixabay';
+  document.getElementById('p-'+s).className='pill'+(srcOn[s]?' '+cls:'');
+}
 
 function addItems(){
   const i=document.getElementById('sInp'),v=i.value.trim();if(!v)return;
@@ -406,24 +415,31 @@ function loadItemsFromSheet(){
 
 /* ── SEARCH ── */
 async function af(src,q,n,nh){
+  if(src==='drive'){
+    const r=await fetch(`/api/driveimages?query=${encodeURIComponent(q)}&per_page=${n}`);
+    if(!r.ok)throw new Error(`Drive ${r.status}`);
+    const d=await r.json();if(d.error)throw new Error(d.error);return d.photos||[];
+  }
   const r=await fetch(`/api/${src}?query=${encodeURIComponent(q+(nh?' food':''))}&per_page=${n}`);
   if(!r.ok)throw new Error(`${src} ${r.status}`);
   const d=await r.json();if(d.error)throw new Error(d.error);return d.photos||[];
 }
 function skelHtml(n){return Array.from({length:n},()=>`<div class="skc"><div class="ski"></div><div class="skb"><div class="skl" style="width:75%"></div><div class="skl" style="width:50%"></div></div></div>`).join('');}
 function mkCard(img,srcKey){
-  const b=srcKey==='pexels'?'bp':'bx';
-  const e=encodeURIComponent(JSON.stringify({full:img.full||img.thumb,thumb:img.thumb,page:img.page,title:img.title,credit:'by '+img.photographer,source:img.source}));
+  const isDrive=srcKey==='drive';
+  const b=isDrive?'bd':srcKey==='pexels'?'bp':'bx';
+  const thumbSrc=isDrive?img.thumb:`/api/image?url=${encodeURIComponent(img.thumb)}`;
+  const e=encodeURIComponent(JSON.stringify({full:img.full||img.thumb,thumb:img.thumb,page:img.page,title:img.title,credit:'by '+img.photographer,source:img.source,isDrive}));
   return `<div class="ic" onclick="openLb('${e}')">
     <div class="ciw sk">
-      <img src="/api/image?url=${encodeURIComponent(img.thumb)}" alt="${img.title}" loading="eager"
+      <img src="${thumbSrc}" alt="${img.title}" loading="eager"
         onload="this.parentElement.classList.remove('sk')"
         onerror="this.parentElement.classList.remove('sk');this.parentElement.innerHTML='<div style=display:flex;align-items:center;justify-content:center;height:100%;color:#aac;font-size:12px>No preview</div>'"/>
-      <span class="sbadge ${b}">${img.source}</span>
+      <span class="sbadge ${b}">${isDrive?'⭐ '+img.folder:img.source}</span>
       <div class="cov"><span class="covbtn">👁 Preview</span></div>
     </div>
     <div class="cb"><div class="ct">${img.title}</div>
-    <div class="cm"><span class="cc">by ${img.photographer}</span><span class="co">Open ↗</span></div></div>
+    <div class="cm"><span class="cc">by ${img.photographer}</span><span class="co">${isDrive?'Download ↓':'Open ↗'}</span></div></div>
   </div>`;
 }
 async function doSearch(){
@@ -446,10 +462,11 @@ async function doSearch(){
     blk.innerHTML=`<div class="ih"><span class="in">${item}</span><span class="itag" id="itag-${i}">loading…</span></div>`;
     res.appendChild(blk);let found=0;
     await Promise.all(act.map(async srcKey=>{
-      const burl=srcKey==='pexels'?`https://www.pexels.com/search/${encodeURIComponent(item)}/`:`https://pixabay.com/photos/search/${encodeURIComponent(item)}/`;
-      const lbl=srcKey==='pexels'?'Pexels':'Pixabay';
+      const burl=srcKey==='pexels'?`https://www.pexels.com/search/${encodeURIComponent(item)}/`:srcKey==='pixabay'?`https://pixabay.com/photos/search/${encodeURIComponent(item)}/`:`https://drive.google.com/drive/folders/1yLzC2uLajMjsMjTNaP_vxfclWya114Sx`;
+      const lbl=srcKey==='drive'?'⭐ My Images':srcKey==='pexels'?'Pexels':'Pixabay';
+      const dotCls=srcKey==='drive'?'dm':srcKey==='pexels'?'dp':'dx';
       const grp=document.createElement('div');grp.className='sg';
-      grp.innerHTML=`<div class="sl"><span class="sn sn-${srcKey}"><span class="sdot ${srcKey==='pexels'?'dp':'dx'}"></span>${lbl}</span><a class="ball" href="${burl}" target="_blank" rel="noopener">Browse all →</a></div><div class="cg" id="g-${i}-${srcKey}">${skelHtml(n)}</div>`;
+      grp.innerHTML=`<div class="sl"><span class="sn sn-${srcKey}"><span class="sdot ${dotCls}"></span>${lbl}</span><a class="ball" href="${burl}" target="_blank" rel="noopener">${srcKey==='drive'?'Browse folder →':'Browse all →'}</a></div><div class="cg" id="g-${i}-${srcKey}">${skelHtml(n)}</div>`;
       blk.appendChild(grp);
       try{
         const photos=await af(srcKey,item,n,nh);
@@ -473,8 +490,13 @@ function openLb(enc){
   lia.innerHTML='<div class="spin on" id="lbspin" style="display:block;width:22px;height:22px;position:absolute"></div><img id="lbimg" alt="" onload="lbLoad()" onerror="lbErr()"/>';
   document.getElementById('lbttl').textContent=img.title||'Photo';
   document.getElementById('lbsub').textContent=(img.credit||'')+(img.source?' · '+img.source:'');
-  document.getElementById('lboBtn').href=img.page||'#';
-  document.getElementById('lbimg').src='/api/image?url='+encodeURIComponent(img.full||img.thumb);
+  const btn=document.getElementById('lboBtn');
+  btn.href=img.page||'#';
+  btn.textContent=img.isDrive?'Open in Drive ↗':'Open & download free ↗';
+  btn.target='_blank';
+  // Drive images load directly; stock images use proxy
+  const src=img.isDrive?img.full:`/api/image?url=${encodeURIComponent(img.full||img.thumb)}`;
+  document.getElementById('lbimg').src=src;
   document.getElementById('lb').style.display='flex';
 }
 function lbLoad(){document.getElementById('lbspin').style.display='none';document.getElementById('lbimg').classList.add('ready');}
