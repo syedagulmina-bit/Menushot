@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MenuShot — Powered by Flipdish</title>
+<title>Menu Gallery — Powered by Flipdish</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -191,25 +191,52 @@ input[type=checkbox]{accent-color:var(--fd);cursor:pointer;width:13px;height:13p
 <body>
 
 <header>
-  <svg width="40" height="44" viewBox="0 0 40 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
-    <line x1="14" y1="34" x2="11" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 14 34;6 14 34;0 14 34;-4 14 34;0 14 34" dur="1.2s" repeatCount="indefinite"/></line>
-    <line x1="26" y1="34" x2="29" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 26 34;-6 26 34;0 26 34;4 26 34;0 26 34" dur="1.2s" repeatCount="indefinite"/></line>
-    <line x1="8" y1="42" x2="14" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="26" y1="42" x2="32" y2="42" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="10" y1="24" x2="5" y2="18" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="0 10 24;-25 10 24;0 10 24" dur="0.8s" repeatCount="indefinite"/></line>
-    <line x1="30" y1="24" x2="35" y2="20" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
-    <ellipse cx="20" cy="35" rx="12" ry="3" fill="rgba(255,255,255,0.25)"/>
-    <ellipse cx="20" cy="34" rx="11" ry="2.5" fill="rgba(255,255,255,0.9)"/>
-    <path d="M9 34 Q9 14 20 12 Q31 14 31 34 Z" fill="white"/>
-    <ellipse cx="14" cy="21" rx="3.5" ry="5" fill="rgba(26,115,232,0.12)" transform="rotate(-15 14 21)"/>
-    <circle cx="20" cy="11" r="4" fill="#ff6b35"/><circle cx="20" cy="7.5" r="2.8" fill="#ff6b35"/><circle cx="20" cy="5" r="2" fill="#ff8c5a"/>
-    <circle cx="16" cy="24" r="3" fill="#1a73e8"><animate attributeName="ry" values="3;3;3;0.3;3" dur="3.5s" repeatCount="indefinite"/></circle>
-    <circle cx="24" cy="24" r="3" fill="#1a73e8"><animate attributeName="ry" values="3;3;3;0.3;3" dur="3.5s" repeatCount="indefinite"/></circle>
-    <circle cx="16.8" cy="24" r="1.2" fill="white"/><circle cx="24.8" cy="24" r="1.2" fill="white"/>
-    <path d="M15 29 Q20 33 25 29" stroke="#1a73e8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0;0 -2;0 0" dur="1.8s" repeatCount="indefinite"/>
+  <!-- Flipdish logo mark (same as hero mascot, smaller) -->
+  <svg width="36" height="44" viewBox="0 0 130 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+    <g>
+      <ellipse cx="65" cy="152" rx="25" ry="5" fill="rgba(255,255,255,0.2)">
+        <animate attributeName="rx" values="25;22;25" dur="1.8s" repeatCount="indefinite"/>
+      </ellipse>
+      <line x1="48" y1="108" x2="40" y2="138" stroke="white" stroke-width="4.5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" values="0 48 108;8 48 108;0 48 108;-5 48 108;0 48 108" dur="1.2s" repeatCount="indefinite"/>
+      </line>
+      <line x1="82" y1="108" x2="90" y2="138" stroke="white" stroke-width="4.5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" values="0 82 108;-8 82 108;0 82 108;5 82 108;0 82 108" dur="1.2s" repeatCount="indefinite"/>
+      </line>
+      <line x1="32" y1="138" x2="46" y2="138" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="84" y1="138" x2="98" y2="138" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="24" y1="80" x2="14" y2="62" stroke="white" stroke-width="4.5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate" values="0 24 80;-30 24 80;0 24 80;-15 24 80;0 24 80" dur="0.9s" repeatCount="indefinite"/>
+      </line>
+      <line x1="106" y1="80" x2="116" y2="65" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+      <ellipse cx="65" cy="110" rx="36" ry="9" fill="rgba(255,255,255,0.3)"/>
+      <ellipse cx="65" cy="107" rx="34" ry="7.5" fill="rgba(255,255,255,0.9)"/>
+      <path d="M31 107 Q31 52 65 46 Q99 52 99 107 Z" fill="white"/>
+      <ellipse cx="48" cy="68" rx="9" ry="14" fill="rgba(26,115,232,0.15)" transform="rotate(-18 48 68)"/>
+      <rect x="61" y="36" width="8" height="12" rx="4" fill="#ff6b35"/>
+      <circle cx="65" cy="34" r="11" fill="#ff6b35"/>
+      <circle cx="65" cy="26" r="8" fill="#ff6b35"/>
+      <circle cx="65" cy="20" r="6" fill="#ff8c5a"/>
+      <circle cx="62" cy="22" r="2" fill="rgba(255,255,255,0.4)"/>
+      <ellipse cx="52" cy="82" rx="7" ry="7" fill="white"/>
+      <ellipse cx="78" cy="82" rx="7" ry="7" fill="white"/>
+      <ellipse cx="54" cy="83" rx="4" ry="4" fill="#1a73e8">
+        <animate attributeName="ry" values="4;4;4;4;0.5;4;4" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="80" cy="83" rx="4" ry="4" fill="#1a73e8">
+        <animate attributeName="ry" values="4;4;4;4;0.5;4;4" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="55.5" cy="82" r="1.6" fill="white"/>
+      <circle cx="81.5" cy="82" r="1.6" fill="white"/>
+      <path d="M46 75 Q52 72 58 74" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M72 74 Q78 72 84 75" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M50 94 Q65 106 80 94" stroke="#1a73e8" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <ellipse cx="44" cy="91" rx="5" ry="3" fill="rgba(255,107,53,0.25)"/>
+      <ellipse cx="86" cy="91" rx="5" ry="3" fill="rgba(255,107,53,0.25)"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0;0 -3;0 0" dur="1.8s" repeatCount="indefinite"/>
+    </g>
   </svg>
-  <div class="logo-text">flipdish <span>MenuShot</span></div>
+  <div class="logo-text">flipdish <span>Menu Gallery</span></div>
   <div class="hbadge"><span class="hdot"></span>Live</div>
 </header>
 
